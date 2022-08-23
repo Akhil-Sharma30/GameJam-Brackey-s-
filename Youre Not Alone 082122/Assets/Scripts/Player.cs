@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 
+
+
 {
 
     public float speed = 10.5f;
+    public GameObject Alien;
+
+    public float timer;
+    public bool thrown;
 
     // Update is called once per frame
     void Update()
     {
+        if (thrown == true)
+        {
+            timer = timer + Time.deltaTime;
+        }
+
         Vector3 pos = transform.position;
 
         if (Input.GetKey("w"))
         {
-            pos.y += speed * Time.deltaTime;
+            pos.z += speed * Time.deltaTime;
         }
         if (Input.GetKey("s"))
         {
-            pos.y -= speed * Time.deltaTime;
+            pos.z -= speed * Time.deltaTime;
         }
         if (Input.GetKey("d"))
         {
@@ -30,6 +41,30 @@ public class Player : MonoBehaviour
             pos.x -= speed * Time.deltaTime;
         }
 
+        if (Input.GetKeyDown("x"))
+        {
+            thrown = true;
+            if (timer <= .5f)
+            {
+                pos.x += speed * Time.deltaTime;
+            }
+        }
+        if (Input.GetKeyUp("g"))
+        {
+            timer = 0;
+            thrown = false;
+        }
+
         transform.position = pos;
     }
+
+    private void FixedUpdate()
+    {
+        //jumping need to be here
+    }
+
 }
+
+
+
+
