@@ -37,8 +37,29 @@ public class PlayerFollowscript : MonoBehaviour
         Vector3 pos = transform.position;
         if (Input.GetKey("t"))
         {
-            pos.x += speed * Time.deltaTime;
-            pos.y += speed * Time.deltaTime;
+           //old proven throwing techniqe
+            // pos.x += speed * Time.deltaTime;
+            //pos.y += speed * Time.deltaTime;
+            if (Input.GetKey("w"))
+            {
+                pos.z += speed * Time.deltaTime;
+                pos.y += speed * Time.deltaTime;
+            }
+            if (Input.GetKey("s"))
+            {
+                pos.z -= speed * Time.deltaTime;
+                pos.y += speed * Time.deltaTime;
+            }
+            if (Input.GetKey("d"))
+            {
+                pos.x += speed * Time.deltaTime;
+                pos.y += speed * Time.deltaTime;
+            }
+            if (Input.GetKey("a"))
+            {
+                pos.x -= speed * Time.deltaTime;
+                pos.y += speed * Time.deltaTime;
+            }
         }
         if (Input.GetKeyDown("g"))
         {
