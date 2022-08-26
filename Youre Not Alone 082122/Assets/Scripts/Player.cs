@@ -26,14 +26,37 @@ public class Player : MonoBehaviour
     public int forceConst = 10;
     public bool grounded;
 
+    //new
+    [SerializeField]
+    private Transform cylinderPrefab;
+
+    public GameObject leftSphere;
+    public GameObject rightSphere;
+    private GameObject cylinder;
+
+    
 
     private void Start()
     {
         selfRigidbody = GetComponent<Rigidbody>();
+        wentRight = true;
+        //new
+        //leftSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //rightSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //leftSphere.transform.position = new Vector3(-1, 0, 0);
+        //rightSphere.transform.position = new Vector3(1, 0, 0);
+
+        InstantiateCylinder(cylinderPrefab, leftSphere.transform.position, rightSphere.transform.position);
     }
     // Update is called once per frame
     void Update()
     {
+        //new
+       // leftSphere.transform.position = new Vector3(-1, -2f * Mathf.Sin(Time.time), 0);
+        //rightSphere.transform.position = new Vector3(1, 2f * Mathf.Sin(Time.time), 0);
+
+        UpdateCylinderPosition(cylinder, leftSphere.transform.position, rightSphere.transform.position);
+
         if (thrown == true)
         {
             timer = timer + Time.deltaTime;
@@ -164,6 +187,25 @@ public class Player : MonoBehaviour
             grounded = true;
             Debug.Log("grounded");
         }
+    }
+
+    //new
+    private void InstantiateCylinder(Transform cylinderPrefab, Vector3 beginPoint, Vector3 endPoint)
+    {
+        cylinder = Instantiate<GameObject>(cylinderPrefab.gameObject, Vector3.zero, Quaternion.identity);
+        UpdateCylinderPosition(cylinder, beginPoint, endPoint);
+    }
+
+    private void UpdateCylinderPosition(GameObject cylinder, Vector3 beginPoint, Vector3 endPoint)
+    {
+        Vector3 offset = endPoint - beginPoint;
+        Vector3 position = beginPoint + (offset / 2.0f);
+
+        cylinder.transform.position = position;
+        cylinder.transform.LookAt(beginPoint);
+        Vector3 localScale = cylinder.transform.localScale;
+        localScale.z = (endPoint - beginPoint).magnitude;
+        cylinder.transform.localScale = localScale;
     }
 
 

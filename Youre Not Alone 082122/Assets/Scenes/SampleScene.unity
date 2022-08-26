@@ -396,8 +396,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1006889570}
   speed: 1
+  throwpwr: 3
+  throwHight: 4
+  sideStepSpeed: 2
   timer: 0
   thrown: 0
+  throwTimer: 0
 --- !u!212 &352309777
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -458,7 +462,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.0215, y: 0.725, z: -0.4133}
   m_LocalScale: {x: 0.024989074, y: 0.024989074, z: 0.16659383}
-  m_Children: []
+  m_Children:
+  - {fileID: 1712993530}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -470,9 +475,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352309775}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 0.5
+  m_Drag: 5
+  m_AngularDrag: 0.01
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -489,8 +494,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.0985553, y: 5, z: 0.20000002}
-  m_Center: {x: -0.062087193, y: 0, z: 0}
+  m_Size: {x: 3.0985556, y: 5.3903117, z: 0.20000002}
+  m_Center: {x: -0.062087193, y: -0.19515409, z: 0}
 --- !u!1 &404965069
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +680,7 @@ HingeJoint:
   m_UseSpring: 1
   m_Spring:
     spring: 2
-    damper: 2
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1073,7 +1078,7 @@ HingeJoint:
   m_UseSpring: 1
   m_Spring:
     spring: 2
-    damper: 2
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1368,6 +1373,36 @@ HingeJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 3
   m_ConnectedMassScale: 3
+--- !u!1 &809997008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 809997009}
+  m_Layer: 0
+  m_Name: Right Sphear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &809997009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809997008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1006889570}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &842520212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,7 +1439,7 @@ HingeJoint:
   m_UseSpring: 1
   m_Spring:
     spring: 2
-    damper: 2
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1650,6 +1685,10 @@ MonoBehaviour:
   jumpTimer: 0
   forceConst: 2
   grounded: 0
+  cylinderPrefab: {fileID: 4830892550056603075, guid: da101aeae8e7d1948b05766040141579,
+    type: 3}
+  leftSphere: {fileID: 1712993529}
+  rightSphere: {fileID: 809997008}
 --- !u!212 &1006889569
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1712,6 +1751,7 @@ Transform:
   m_LocalScale: {x: 0.033318765, y: 0.033318765, z: 0.16659383}
   m_Children:
   - {fileID: 667194167}
+  - {fileID: 809997009}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1742,8 +1782,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.7807634, y: 7.12, z: 0.20000002}
-  m_Center: {x: 0.2312109, y: 0, z: 0}
+  m_Size: {x: 2.7807634, y: 6.671474, z: 0.20000002}
+  m_Center: {x: 0.2312109, y: 0.22426273, z: 0}
 --- !u!145 &1006889573
 SpringJoint:
   m_ObjectHideFlags: 0
@@ -1756,7 +1796,7 @@ SpringJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 6.4348116, y: 4.7466664, z: 0.0072032693}
   serializedVersion: 2
-  m_Spring: 10
+  m_Spring: 0
   m_Damper: 0.2
   m_MinDistance: 0
   m_MaxDistance: 0
@@ -1822,7 +1862,7 @@ HingeJoint:
   m_UseSpring: 1
   m_Spring:
     spring: 2
-    damper: 2
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -2152,7 +2192,7 @@ HingeJoint:
   m_UseSpring: 1
   m_Spring:
     spring: 2
-    damper: 2
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -2602,6 +2642,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1712993529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1712993530}
+  m_Layer: 0
+  m_Name: Left Sphear
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1712993530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712993529}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 352309778}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728675880
 GameObject:
@@ -3356,6 +3426,7 @@ GameObject:
   - component: {fileID: 2031950897}
   - component: {fileID: 2031950896}
   - component: {fileID: 2031950895}
+  - component: {fileID: 2031950901}
   m_Layer: 0
   m_Name: Cylinder (4)
   m_TagString: Untagged
@@ -3363,41 +3434,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!59 &2031950895
-HingeJoint:
+--- !u!145 &2031950895
+SpringJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031950894}
   m_ConnectedBody: {fileID: 578014461}
-  m_Anchor: {x: 0, y: 1, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Anchor: {x: 0, y: 0.9999999, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.000023149187, y: -1.4999757, z: 0}
-  m_UseSpring: 1
-  m_Spring:
-    spring: 2
-    damper: 2
-    targetPosition: 0
-  m_UseMotor: 0
-  m_Motor:
-    targetVelocity: 0
-    force: 0
-    freeSpin: 0
-  m_UseLimits: 0
-  m_Limits:
-    min: 0
-    max: 0
-    bounciness: 0
-    bounceMinVelocity: 0.2
-    contactDistance: 0
+  serializedVersion: 2
+  m_Spring: 2
+  m_Damper: 20
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 3
-  m_ConnectedMassScale: 3
+  m_MassScale: 0.3
+  m_ConnectedMassScale: 0.3
 --- !u!54 &2031950896
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3489,3 +3548,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -88.186005}
+--- !u!59 &2031950901
+HingeJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031950894}
+  m_ConnectedBody: {fileID: 578014461}
+  m_Anchor: {x: 0, y: 0.9999999, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0.000023149187, y: -1.4999757, z: 0}
+  m_UseSpring: 1
+  m_Spring:
+    spring: 2
+    damper: 20
+    targetPosition: 0
+  m_UseMotor: 0
+  m_Motor:
+    targetVelocity: 0
+    force: 0
+    freeSpin: 0
+  m_UseLimits: 0
+  m_Limits:
+    min: 0
+    max: 0
+    bounciness: 0
+    bounceMinVelocity: 0.2
+    contactDistance: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 3
+  m_ConnectedMassScale: 3

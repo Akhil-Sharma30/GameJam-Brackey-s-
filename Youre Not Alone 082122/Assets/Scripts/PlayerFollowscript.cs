@@ -6,14 +6,30 @@ public class PlayerFollowscript : MonoBehaviour
 {
     
     public Transform target;//set target from inspector instead of looking in Update
-    public float speed;
+    public float speed = 1;
+    public int throwpwr = 3;
+    public int throwHight =3;
+    public float sideStepSpeed = 2;
     public float timer;
     public bool thrown;
+    public bool throwTimer;
     private bool wentUp;
     private bool wentDown;
     private bool wentLeft;
     private bool wentRight;
+    private GameObject me;
 
+   
+
+    private void Start()
+    {
+        wentRight = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
@@ -21,17 +37,15 @@ public class PlayerFollowscript : MonoBehaviour
         
         if (timer <= .5f && thrown == true)
         {
-
         
         transform.LookAt(target.position);
         transform.Rotate(new Vector3(0, -90, 0), Space.Self);//correcting the original rotation
-
-
-        //move towards the player
-        if (Vector3.Distance(transform.position, target.position) > .1f)
-        {//move if distance from target is greater than 1
+            //move towards the player
+            if (Vector3.Distance(transform.position, target.position) > .1f)
+            {//move if distance from target is greater than 1
             transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
-        }
+            }
+
         }
         
 
@@ -70,27 +84,33 @@ public class PlayerFollowscript : MonoBehaviour
         Vector3 pos = transform.position;
         if (Input.GetKey("t"))
         {
-           
-            if ( wentUp == true )
-            {
-                pos.z += speed * Time.deltaTime;
-                pos.y += speed * Time.deltaTime;
-            }
-            if (wentDown == true )
-            {
-                pos.z -= speed * Time.deltaTime;
-                pos.y += speed * Time.deltaTime;
-            }
-            if (wentRight == true)
-            {
-                pos.x += speed * Time.deltaTime;
-                pos.y += speed * Time.deltaTime;
-            }
-            if (wentLeft == true)
-            {
-                pos.x -= speed * Time.deltaTime;
-                pos.y += speed * Time.deltaTime;
-            }
+
+
+
+            gameObject.GetComponent<Rigidbody>().AddForce(throwpwr, throwHight, 0);
+            //gameObject.GetComponent<Rigidbody>().velocity = transform.up * throwpwr;
+            /*
+             if ( wentUp == true )
+             {
+                 pos.z += throwpwr * Time.deltaTime;
+                 pos.y += throwpwr * Time.deltaTime;
+             }
+             if (wentDown == true )
+             {
+                 pos.z -= throwpwr * Time.deltaTime;
+                 pos.y += throwpwr * Time.deltaTime;
+             }
+             if (wentRight == true)
+             {
+                 pos.x += throwpwr * Time.deltaTime;
+                 pos.y += throwpwr * Time.deltaTime;
+             }
+             if (wentLeft == true)
+             {
+                 pos.x -= throwpwr * Time.deltaTime;
+                 pos.y += throwpwr * Time.deltaTime;
+             }
+             */
         }
         if (Input.GetKey("g"))
         {
@@ -102,22 +122,22 @@ public class PlayerFollowscript : MonoBehaviour
                 //pos.x -= speed * Time.deltaTime;
                 if (wentUp == true)
                 {
-                    pos.z -= speed * Time.deltaTime;
+                    pos.z -= sideStepSpeed * Time.deltaTime;
 
                 }
                 if (wentDown == true)
                 {
-                    pos.z += speed * Time.deltaTime;
+                    pos.z += sideStepSpeed * Time.deltaTime;
 
                 }
                 if (wentRight == true)
                 {
-                    pos.x -= speed * Time.deltaTime;
+                    pos.x -= sideStepSpeed * Time.deltaTime;
 
                 }
                 if (wentLeft == true)
                 {
-                    pos.x += speed * Time.deltaTime;
+                    pos.x += sideStepSpeed * Time.deltaTime;
 
                 }
             }
@@ -129,10 +149,12 @@ public class PlayerFollowscript : MonoBehaviour
         {
             timer = 0;
             thrown = false;
-            
         }
        
         
         transform.position = pos;
+
     }
+
+
 }
