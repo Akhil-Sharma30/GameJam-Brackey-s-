@@ -8,10 +8,17 @@ public class EnemyAI : MonoBehaviour
     public float stoppingDistance;
     public float retreatDistance;
 
+    private float timeBtwShoot;
+    public float startTimeBtwShoot;
+
+    public GameObject projectile;
+
     public Transform player;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        timeBtwShoot = startTimeBtwShoot;
     }
 
     private void Update() {
@@ -28,6 +35,14 @@ public class EnemyAI : MonoBehaviour
         else if(Vector3.Distance(transform.position,player.position) < retreatDistance)
         {
             transform.position = Vector3.MoveTowards(transform.position,player.position,speed*Time.deltaTime);
+        }
+
+        if(timeBtwShoot <=0)
+        {
+            Instantiate(projectile,transform.position,Quaternion.identity);
+            timeBtwShoot = startTimeBtwShoot;
+        }else{
+            timeBtwShoot -= Time.deltaTime;
         }
     }
 }
